@@ -1,0 +1,138 @@
+body{
+    background-color: #2b2b2b;
+}
+
+header{
+    border: 1px solid white;
+    width: 90%;
+    margin: 4rem auto;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+}
+
+h1{
+    font-size: calc(1.3rem + 1.5vw);
+    word-wrap: break-word;
+}
+
+main{
+    border: 1px solid white;
+    width: 90%;
+    margin: 6rem auto;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+#input-label-box{
+    flex-direction: column-reverse;
+    justify-content: space-between;
+}
+
+#input{
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+#range-value{
+    border: 1px solid;
+    padding: 4px 8px;
+    font-family: monospace;
+}
+
+.range-value-red{
+    border-color: #de0000;
+    color: #de0000;
+}
+
+.range-value-yellow{
+    border-color: #ffe600;
+    color: #ffe600;
+}
+
+.range-value-green{
+    border-color: rgb(0, 255, 13);
+    color:rgb(0, 255, 13)
+}
+
+
+#input:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.input-red{
+    accent-color: #de0000;
+}
+
+.input-yellow{
+    accent-color: #ffe600;
+}
+
+.input-green{
+    accent-color: rgb(0, 255, 13);
+}
+
+#response,
+#alert,
+#range-value{
+    border-radius: 5px;
+}
+
+@media screen and (min-width: 576px) {
+    header,
+    main{
+        width: 80%;
+    }
+
+    #input-label-box{
+        flex-direction: row;
+    }
+
+   #input{
+    margin: 0;
+    width: auto;
+   } 
+}
+
+@media screen and (min-width: 768px) {
+    header,
+    main{
+        width: 65%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    header,
+    main{
+        width: 50%;
+    }
+}
+
+#alert{
+    margin: 1rem auto 0;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.alert-yellow{
+    background-color: #ffe600;
+    color: #2b2b2b;
+}
+
+.alert-red{
+    background-color: #de0000;
+    color: white;
+}
+
+#response{
+    font-family: monospace;
+    background-color: #37352d;
+    margin: 1rem auto 0;
+    padding: 10px;
+    color: #e8912c;
+    border: 1px solid #e8912c;
+    word-wrap: break-word;
+}
