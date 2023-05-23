@@ -93,7 +93,7 @@ main{
 
    #input{
     margin: 0;
-    width: auto;
+    width: 86%;
    } 
 }
 
@@ -109,6 +109,10 @@ main{
     main{
         width: 50%;
     }
+
+    #input{
+        width: 90%;
+    } 
 }
 
 #alert{

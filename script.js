@@ -1,10 +1,8 @@
 // Dai la possibilità all’utente di scegliere fra lettere, numeri, caratteri speciali
 // Sostituire Math.random() con Crypto: getRandomValues() method
 // Aggiungi un tasto per la copia della password
-// Sostituisci i parseInt con dei Math.floor() quando non devi trasformare una stringa in numero
 // aggiungere due tasti per scorrere di +-1 il value dell’input
 // aggiungere un tasto per refreshare la password
-// crea un input type range bello esteticamente
 
 
 // inizializzo la variabile inputElement e la metto uguale all'input range del documento
@@ -49,16 +47,16 @@ function genPwd () {
         for (let i = 0 ; i < inputVal ; i++) {
         
             // dichiaro 4 nuove variabili che prendono un valore a caso del loro array
-            const randomNumber = numbers [parseInt (Math.random() * numbers.length)]
-            const randomUppercaseLetter = uppercaseLetters [parseInt (Math.random() * uppercaseLetters.length)]
-            const randomLowercaseLetter = lowercaseLetters [parseInt (Math.random() * lowercaseLetters.length)]
-            const randomSpecialCharacter = specialCharacters [parseInt (Math.random() * specialCharacters.length)]
+            const randomNumber = numbers [Math.floor (Math.random() * numbers.length)]
+            const randomUppercaseLetter = uppercaseLetters [Math.floor (Math.random() * uppercaseLetters.length)]
+            const randomLowercaseLetter = lowercaseLetters [Math.floor (Math.random() * lowercaseLetters.length)]
+            const randomSpecialCharacter = specialCharacters [Math.floor (Math.random() * specialCharacters.length)]
             
             // creo un nuovo array typesRandom con le 4 variabili casuali dichiarate prima
             const typesRandom = [randomNumber, randomUppercaseLetter, randomLowercaseLetter, randomSpecialCharacter]
 
             // dichiaro un variabile che prende un valore a caso dall'array typesRandom, qundi un randomCharacter
-            const randomChar = typesRandom [parseInt (Math.random() * typesRandom.length)]
+            const randomChar = typesRandom [Math.floor (Math.random() * typesRandom.length)]
 
             // se il randomChar è incluso in uno degli array iniziali, allora la variabile booleana di quel tipo diventa true
             if (numbers.includes(randomChar)) hasNumber = true
@@ -214,7 +212,6 @@ document.addEventListener("keydown",
             checkInput ()
         } else if (event.key === "ArrowUp" || event.key === "ArrowDown" || event.key === "ArrowRight" || event.key === "ArrowLeft") {
             inputElement.focus()
-            inputElement.active()
         }
     }    
 )
