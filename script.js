@@ -1,84 +1,180 @@
-// Dai la possibilità all’utente di scegliere fra lettere, numeri, caratteri speciali
-// Sostituire Math.random() con Crypto: getRandomValues() method
-// Aggiungi un tasto per la copia della password
-// aggiungere due tasti per scorrere di +-1 il value dell’input
-// aggiungere un tasto per refreshare la password
-
-
-// inizializzo la variabile inputElement e la metto uguale all'input range del documento
-const inputElement = document.getElementById ("input")
-
-// inizializzo la variabile inputVal e le fornisco un valore iniziale
-let inputVal = 1
-
-// inizializzo la variabile password e la pongo uguale ad una stringa vuota
-let password = ""
-
-// inizializzo 4 tipi diversi di array
-const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-const uppercaseLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-const lowercaseLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-const specialCharacters = ["!", "@", "#", "$", "%", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";", ":", "'", '"', ",", ".", "<", ">", "/", "?", "`", "~"]
+// sostituire Math.random() con Crypto: getRandomValues()
+// aggiungi un tasto per la copia della password (dentro il response)
+// aggiungi un tasto per refreshare la password (dentro il response)
+// aggiungi due tasti per scorrere di +-1 il value dell’input
 
 
 
-// creo la funzione che dagli array genera la password finale
-function genPwd () {
+const inputRangeElement = document.getElementById ("input-range")
+const inputCheckNumbers = document.getElementById ("input-check-numbers")
+const inputCheckUpLetters = document.getElementById ("input-check-up-letters")
+const inputCheckLowLetters = document.getElementById ("input-check-low-letters")
+const inputCheckSpecChars = document.getElementById ("input-check-spec-chars")
+
+const rangeValue = parseInt (inputRangeElement.value)
+const areNumbersOk = inputCheckNumbers.checked
+const areUpLettersOk = inputCheckUpLetters.checked
+const areLowLettersOk = inputCheckLowLetters.checked
+const areSpecCharsOk = inputCheckSpecChars.checked
+
+// richiamo la funzione di check con il value iniziale del range = 12, così al caricamento della pagina la password non risulta vuota
+checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+
+// EVENT LISTENERS /////////////////////////////////////////
+inputRangeElement.addEventListener ("input", 
+    function () {
+        const rangeValue = parseInt (inputRangeElement.value)
+        const areNumbersOk = inputCheckNumbers.checked
+        const areUpLettersOk = inputCheckUpLetters.checked
+        const areLowLettersOk = inputCheckLowLetters.checked
+        const areSpecCharsOk = inputCheckSpecChars.checked
+
+        checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+    }
+)
+
+inputCheckNumbers.addEventListener ("click",
+    function () {
+        const rangeValue = parseInt (inputRangeElement.value)
+        const areNumbersOk = inputCheckNumbers.checked
+        const areUpLettersOk = inputCheckUpLetters.checked
+        const areLowLettersOk = inputCheckLowLetters.checked
+        const areSpecCharsOk = inputCheckSpecChars.checked
+        
+        checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+    }
+)
+
+inputCheckUpLetters.addEventListener ("click",
+    function () {
+        const rangeValue = parseInt (inputRangeElement.value)
+        const areNumbersOk = inputCheckNumbers.checked
+        const areUpLettersOk = inputCheckUpLetters.checked
+        const areLowLettersOk = inputCheckLowLetters.checked
+        const areSpecCharsOk = inputCheckSpecChars.checked
+        
+        checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+    }
+)
+
+inputCheckLowLetters.addEventListener ("click",
+    function () {
+        const rangeValue = parseInt (inputRangeElement.value)
+        const areNumbersOk = inputCheckNumbers.checked
+        const areUpLettersOk = inputCheckUpLetters.checked
+        const areLowLettersOk = inputCheckLowLetters.checked
+        const areSpecCharsOk = inputCheckSpecChars.checked
+        
+        checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+    }
+)
+
+inputCheckSpecChars.addEventListener ("click",
+    function () {
+        const rangeValue = parseInt (inputRangeElement.value)
+        const areNumbersOk = inputCheckNumbers.checked
+        const areUpLettersOk = inputCheckUpLetters.checked
+        const areLowLettersOk = inputCheckLowLetters.checked
+        const areSpecCharsOk = inputCheckSpecChars.checked
+        
+        checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+    }
+)
+
+
+// aggiungo due evevnti diversi che si attivano uno con l'enter, ed esegue il refresh della pwd. L'altro cambia la pwdLength con le frecce direzionali
+document.addEventListener("keydown", 
+    function (event) {
+        if (event.key === "Enter") {
+            const rangeValue = parseInt (inputRangeElement.value)
+            const areNumbersOk = inputCheckNumbers.checked
+            const areUpLettersOk = inputCheckUpLetters.checked
+            const areLowLettersOk = inputCheckLowLetters.checked
+            const areSpecCharsOk = inputCheckSpecChars.checked
+            
+            checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+        } else if (event.key === "ArrowUp" || event.key === "ArrowDown" || event.key === "ArrowRight" || event.key === "ArrowLeft") {
+            inputRangeElement.focus()
+        }
+    }    
+)
+
+
+// FUNZIONI ///////////////////////////////////////////////
+
+/**
+ * Generates a pwdLength characters long password with several combinations of types of characters within at least one char per type selected
+ * @param {number} pwdLength password's length
+ * @param {boolean} areNumbersIncluded includes or not numbers
+ * @param {boolean} areUpLettersIncluded includes or not uppercase letters
+ * @param {boolean} areLowLettersIncluded includes or not lowercase letters
+ * @param {boolean} areSpecCharsIncluded includes or not special characters
+ * @returns {string} the password
+ */
+function genPwd (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLettersIncluded, areSpecCharsIncluded) {
+
+    if (!areNumbersIncluded && !areUpLettersIncluded && !areLowLettersIncluded && !areSpecCharsIncluded) {
+        areNumbersIncluded = true
+    }
+
+    let password = ""
+
+    // inizializzo 4 tipi diversi di array
+    const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    const upLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    const lowLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    const specChars = ["!", "@", "#", "$", "%", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";", ":", ",", ".", "<", ">", "/", "?", "~", "£", "€", "^"]
         
     // dichiaro 4 variabili in cui mi chiedo se nella password sono inclusi tutti i tipi di caratteri
-    let hasNumber = false
-    let hasUpper = false
-    let hasLower = false
-    let hasSpecial = false
+    let hasNumber = false;     if (!areNumbersIncluded)     {hasNumber = true};
+    let hasUp = false;         if (!areUpLettersIncluded)   {hasUp = true};
+    let hasLow = false;        if (!areLowLettersIncluded)  {hasLow = true};
+    let hasSpec = false;       if (!areSpecCharsIncluded)   {hasSpec = true};
 
     // genera diverse password all'infinito, finché non generi una password con tutti i tipi di caratteri 
-    while (!hasNumber || !hasUpper || !hasLower || !hasSpecial) {
+    while (!hasNumber || !hasUp || !hasLow || !hasSpec) {
 
         // resetto la variabile password ad ogni ciclo while
         password = ""
         
         // resetto tutte le variabili booleane di check type ad ogni ciclo while
-        hasNumber = false
-        hasUpper = false
-        hasLower = false
-        hasSpecial = false
+        hasNumber = false;     if (!areNumbersIncluded)     {hasNumber = true};
+        hasUp = false;         if (!areUpLettersIncluded)   {hasUp = true};
+        hasLow = false;        if (!areLowLettersIncluded)  {hasLow = true};
+        hasSpec = false;       if (!areSpecCharsIncluded)   {hasSpec = true};
 
-        // faccio un ciclo for che si ripete n volte, con n = inputVal
-        for (let i = 0 ; i < inputVal ; i++) {
+
+        while (password.length < pwdLength) {
         
             // dichiaro 4 nuove variabili che prendono un valore a caso del loro array
-            const randomNumber = numbers [Math.floor (Math.random() * numbers.length)]
-            const randomUppercaseLetter = uppercaseLetters [Math.floor (Math.random() * uppercaseLetters.length)]
-            const randomLowercaseLetter = lowercaseLetters [Math.floor (Math.random() * lowercaseLetters.length)]
-            const randomSpecialCharacter = specialCharacters [Math.floor (Math.random() * specialCharacters.length)]
+            let randomNumber = numbers [Math.floor (Math.random() * numbers.length)];       if (!areNumbersIncluded)     {randomNumber = ""};
+            let randomUp = upLetters [Math.floor (Math.random() * upLetters.length)];       if (!areUpLettersIncluded)   {randomUp = ""};
+            let randomLow = lowLetters [Math.floor (Math.random() * lowLetters.length)];    if (!areLowLettersIncluded)  {randomLow = ""};
+            let randomSpec = specChars [Math.floor (Math.random() * specChars.length)];     if (!areSpecCharsIncluded)   {randomSpec = ""};
             
             // creo un nuovo array typesRandom con le 4 variabili casuali dichiarate prima
-            const typesRandom = [randomNumber, randomUppercaseLetter, randomLowercaseLetter, randomSpecialCharacter]
+            const typesRandom = [randomNumber, randomUp, randomLow, randomSpec]
 
             // dichiaro un variabile che prende un valore a caso dall'array typesRandom, qundi un randomCharacter
             const randomChar = typesRandom [Math.floor (Math.random() * typesRandom.length)]
 
             // se il randomChar è incluso in uno degli array iniziali, allora la variabile booleana di quel tipo diventa true
-            if (numbers.includes(randomChar)) hasNumber = true
-            if (uppercaseLetters.includes(randomChar)) hasUpper = true
-            if (lowercaseLetters.includes(randomChar)) hasLower = true
-            if (specialCharacters.includes(randomChar)) hasSpecial = true
+            if (numbers.includes(randomChar))     {hasNumber = true}
+            if (upLetters.includes(randomChar))   {hasUp = true}
+            if (lowLetters.includes(randomChar))  {hasLow = true}
+            if (specChars.includes(randomChar))   {hasSpec = true}
             
             // riassegno il valore della variabile password aggiungendo per ogni ciclo un valore a caso dell'array typesRandom
             password += randomChar
         }
     }
+    // ritorno il valore della password
+    return password
 }
 
 
-// creo una funzione che esegua dei controlli sulla inputVal, che crei degli alert se serve e quando possibile richiami genPwd ()
-function checkInput () {
-
-    // riassegno inputVal e la pongo uguale al value dell'input
-    inputVal = parseInt (inputElement.value)
-
-    // pulisco la stringa della variabile password
-    password = ""
+// creo una funzione che esegua dei controlli sugli input, che crei degli alert se serve e quando possibile richiami genPwd ()
+function checkInputs (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLettersIncluded, areSpecCharsIncluded) {
 
     // inizializzo la costante mainElement e la metto uguale al main nel documento
     const mainElement = document.querySelector ("main")
@@ -99,77 +195,63 @@ function checkInput () {
         responseElement.remove()
     }
 
+    if (!areNumbersIncluded && !areUpLettersIncluded && !areLowLettersIncluded && !areSpecCharsIncluded) {
+        document.getElementById ("input-check-numbers").checked = true
+    }
 
-    // se a inputVal è assegnato un valore Nan, cioè che non è un numero, oppure è assegnato un valore minore di 1, cioè da 0 in giù oppure...
-    if (isNaN (inputVal) || inputVal < 1 || inputVal !== Math.floor (inputVal) || Math.floor (inputVal) > 80) {
+    // se a pwdLength è assegnato un valore Nan, cioè che non è un numero, oppure è assegnato un valore minore di 1, cioè da 0 in giù oppure...
+    if (isNaN (pwdLength) || pwdLength < 1 || pwdLength !== Math.floor (pwdLength) || Math.floor (pwdLength) > 80) {
         // prendi l'emento del documento con id="range-value", leva le classi "yellow e green e aggiungi la red"
-        document.getElementById ("range-value").classList.remove ("range-value-yellow")
-        document.getElementById ("range-value").classList.remove ("range-value-green")
-        document.getElementById ("range-value").classList.add ("range-value-red")
+        document.getElementById ("input-range-value").classList.remove ("my_value-yellow")
+        document.getElementById ("input-range-value").classList.remove ("my_value-green")
+        document.getElementById ("input-range-value").classList.add ("my_value-red")
 
         // prendi l'input element, leva le classi "yellow e green e aggiungi la red"
-        inputElement.classList.remove ("input-yellow")
-        inputElement.classList.remove ("input-green")
-        inputElement.classList.add ("input-red")
+        inputRangeElement.classList.remove ("my_range-yellow")
+        inputRangeElement.classList.remove ("my_range-green")
+        inputRangeElement.classList.add ("my_range-red")
 
         // crea una variabile chiamata alertElement, uguale ad un elemento <p> creato nel documento, dagli un id e una classe, e popola con un testo, dopodiché aggiungilo al main
         const alertElement = document.createElement ("p")
         alertElement.id = "alert"
-        alertElement.classList.add ("alert-red")
-        alertElement.append ("Invalid Pwd lenght !")
+        alertElement.classList.add ("my_alert-red")
+        alertElement.append ("INVALID INPUTS!")
         mainElement.appendChild (alertElement)
 
-    } else if (inputVal === 1) {
-        document.getElementById ("range-value").classList.remove ("range-value-yellow")
-        document.getElementById ("range-value").classList.remove ("range-value-green")
-        document.getElementById ("range-value").classList.add ("range-value-red")
+    } else if (pwdLength < 4) {
+        document.getElementById ("input-range-value").classList.remove ("my_value-yellow")
+        document.getElementById ("input-range-value").classList.remove ("my_value-green")
+        document.getElementById ("input-range-value").classList.add ("my_value-red")
 
-        inputElement.classList.remove ("input-yellow")
-        inputElement.classList.remove ("input-green")
-        inputElement.classList.add ("input-red")
+        inputRangeElement.classList.remove ("my_range-yellow")
+        inputRangeElement.classList.remove ("my_range-green")
+        inputRangeElement.classList.add ("my_range-red")
 
         const alertElement = document.createElement ("p")
         alertElement.id = "alert"
-        alertElement.classList.add ("alert-red")
+        alertElement.classList.add ("my_alert-red")
         alertElement.append ("Password must have at least 4 characters !")
         mainElement.appendChild (alertElement)
 
-        document.getElementById ("range-value") .innerText = inputVal
-
-    } else if (inputVal < 4) {
-        document.getElementById ("range-value").classList.remove ("range-value-yellow")
-        document.getElementById ("range-value").classList.remove ("range-value-green")
-        document.getElementById ("range-value").classList.add ("range-value-red")
-
-        inputElement.classList.remove ("input-yellow")
-        inputElement.classList.remove ("input-green")
-        inputElement.classList.add ("input-red")
-
-        const alertElement = document.createElement ("p")
-        alertElement.id = "alert"
-        alertElement.classList.add ("alert-red")
-        alertElement.append ("Password must have at least 4 characters !")
-        mainElement.appendChild (alertElement)
-
-        document.getElementById ("range-value") .innerText = inputVal
+        document.getElementById ("input-range-value") .innerText = pwdLength
         
-    } else if (inputVal < 12) {
-        document.getElementById ("range-value").classList.remove ("range-value-red")
-        document.getElementById ("range-value").classList.remove ("range-value-green")
-        document.getElementById ("range-value").classList.add ("range-value-yellow")
+    } else if (pwdLength < 12) {
+        document.getElementById ("input-range-value").classList.remove ("my_value-red")
+        document.getElementById ("input-range-value").classList.remove ("my_value-green")
+        document.getElementById ("input-range-value").classList.add ("my_value-yellow")
 
-        inputElement.classList.remove ("input-red")
-        inputElement.classList.remove ("input-green")
-        inputElement.classList.add ("input-yellow")
+        inputRangeElement.classList.remove ("my_range-red")
+        inputRangeElement.classList.remove ("my_range-green")
+        inputRangeElement.classList.add ("my_range-yellow")
 
         const alertElement = document.createElement ("p")
         alertElement.id = "alert"
-        alertElement.classList.add ("alert-yellow")
+        alertElement.classList.add ("my_alert-yellow")
         alertElement.append ("Strong passwords must have at least 12 characters !")
         mainElement.appendChild (alertElement)
 
         // richiamo la funzione che genera la password
-        genPwd ()
+        const password = genPwd (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLettersIncluded, areSpecCharsIncluded)
 
         // crea una variabile chiamata responseElement, uguale ad un elepento <p> creato nel documento, dagli un id e una classe, e popola con la password, dopodiché aggiungilo al main, ma dopo l'alert
         const responseElement = document.createElement ("p")
@@ -177,41 +259,24 @@ function checkInput () {
         responseElement.append (password)
         mainElement.appendChild (responseElement)
 
-        document.getElementById ("range-value") .innerText = inputVal
+        document.getElementById ("input-range-value") .innerText = pwdLength
 
     } else {
-        document.getElementById ("range-value").classList.remove ("range-value-yellow")
-        document.getElementById ("range-value").classList.remove ("range-value-red")
-        document.getElementById ("range-value").classList.add ("range-value-green")
+        document.getElementById ("input-range-value").classList.remove ("my_value-yellow")
+        document.getElementById ("input-range-value").classList.remove ("my_value-red")
+        document.getElementById ("input-range-value").classList.add ("my_value-green")
 
-        inputElement.classList.remove ("input-yellow")
-        inputElement.classList.remove ("input-red")
-        inputElement.classList.add ("input-green")
+        inputRangeElement.classList.remove ("my_range-yellow")
+        inputRangeElement.classList.remove ("my_range-red")
+        inputRangeElement.classList.add ("my_range-green")
 
-        genPwd ()
+        const password = genPwd (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLettersIncluded, areSpecCharsIncluded)
 
         const responseElement = document.createElement ("p")
         responseElement.id = "response"
         responseElement.append (password)
         mainElement.appendChild (responseElement)
 
-        document.getElementById ("range-value") .innerText = inputVal
+        document.getElementById ("input-range-value") .innerText = pwdLength
     }
 }
-
-// richiamo la funzione di check input con il value iniziale che è 12, così al caricamento della pagina la password non risulta vuota
-checkInput ()
-
-// aggiungo un evento che si attiva al cambiamento istantaneo dell'input, che è diverso da "change"
-inputElement.addEventListener ("input", function () {checkInput ()})
-
-// aggiungo due evevnti diversi che si attivano uno con l'enter, ed esegue il refresh della pwd. L'altro cambia l'inputVal con le frecce direzionali
-document.addEventListener("keydown", 
-    function (event) {
-        if (event.key === "Enter") {
-            checkInput ()
-        } else if (event.key === "ArrowUp" || event.key === "ArrowDown" || event.key === "ArrowRight" || event.key === "ArrowLeft") {
-            inputElement.focus()
-        }
-    }    
-)
