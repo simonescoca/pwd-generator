@@ -17,14 +17,47 @@
             </h1>
         </header>
         <main>
-            <div id="input-label-box" class="d-flex align-items-center">
-                <input type="range" id="input" min="1" max="80" value="12">
-                <label for="pwd-length">
-                    <span id="range-value">
-                        <!-- JS Content -->
-                    </span>
-                </label>
-            </div>
+            <section id="input-area">
+                <div class="my_input-range-container d-flex">
+                    <input type="range" id="input-range" min="1" max="80" step="1" value="12">
+                    <label>
+                        <span id="input-range-value">
+                            <!-- JS Content -->
+                        </span>
+                    </label>
+                </div>
+                <section class="my_checks d-flex">
+                    
+                    <div class="my_input-check-container">
+                        <input type="checkbox" class="btn-check my_input-check" id="input-check-numbers" checked autocomplete="off">
+                        <label class="btn btn-outline-secondary my_btn" for="input-check-numbers">
+                            1 2 3
+                        </label>
+                    </div>
+
+                    <div class="my_input-check-container">
+                        <input type="checkbox" class="btn-check my_input-check" id="input-check-up-letters" checked autocomplete="off">
+                        <label class="btn btn-outline-secondary my_btn" for="input-check-up-letters">
+                            A B C
+                        </label>
+                    </div>
+
+                    <div class="my_input-check-container">
+                        <input type="checkbox" class="btn-check my_input-check" id="input-check-low-letters" checked autocomplete="off">
+                        <label class="btn btn-outline-secondary my_btn" for="input-check-low-letters">
+                            a b c
+                        </label>
+                    </div>
+
+                    <div class="my_input-check-container">
+                        <input type="checkbox" class="btn-check my_input-check" id="input-check-spec-chars" checked autocomplete="off">
+                        <label class="btn btn-outline-secondary my_btn" for="input-check-spec-chars">
+                            ! # @
+                        </label>
+                    </div>
+
+                </section>
+            </section>
             <!-- JS Content -->
             <!-- JS Content -->
         </main>
