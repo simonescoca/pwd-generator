@@ -26,59 +26,95 @@ main{
     color: white;
 }
 
-#input-label-box{
-    flex-direction: column-reverse;
+.my_input-range-container{
+    align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
 }
 
-#input{
-    margin-top: 0.5rem;
-    width: 100%;
+#input-range{
+    width: 80%;
 }
 
-#range-value{
+#input-range:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.my_range-red{
+    accent-color: #de0000;
+}
+
+.my_range-yellow{
+    accent-color: #ffe600;
+}
+
+.my_range-green{
+    accent-color: rgb(0, 255, 13);
+}
+
+#input-range-value{
     border: 1px solid;
     padding: 4px 8px;
     font-family: monospace;
 }
 
-.range-value-red{
+.my_value-red{
     border-color: #de0000;
     color: #de0000;
 }
 
-.range-value-yellow{
+.my_value-yellow{
     border-color: #ffe600;
     color: #ffe600;
 }
 
-.range-value-green{
+.my_value-green{
     border-color: rgb(0, 255, 13);
     color:rgb(0, 255, 13)
 }
 
-
-#input:focus{
-    outline: none;
-    box-shadow: none;
+.my_checks{
+    justify-content: space-between;
 }
 
-.input-red{
-    accent-color: #de0000;
-}
-
-.input-yellow{
-    accent-color: #ffe600;
-}
-
-.input-green{
-    accent-color: rgb(0, 255, 13);
+.form-check{
+    margin: 0;
 }
 
 #response,
 #alert,
-#range-value{
+#input-range-value{
     border-radius: 5px;
+}
+
+
+#alert{
+    margin: 1rem auto 0;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.my_alert-yellow{
+    background-color: #ffe600;
+    color: #2b2b2b;
+}
+
+.my_alert-red{
+    background-color: #de0000;
+    color: white;
+}
+
+#response{
+    font-family: monospace;
+    background-color: #37352d;
+    margin: 1rem auto 0;
+    padding: 10px;
+    color: #e8912c;
+    border: 1px solid #e8912c;
+    word-wrap: break-word;
 }
 
 @media screen and (min-width: 576px) {
@@ -87,14 +123,10 @@ main{
         width: 80%;
     }
 
-    #input-label-box{
-        flex-direction: row;
+   #input-range{
+        margin: 0;
+        width: 86%;
     }
-
-   #input{
-    margin: 0;
-    width: 86%;
-   } 
 }
 
 @media screen and (min-width: 768px) {
@@ -110,33 +142,11 @@ main{
         width: 50%;
     }
 
-    #input{
+    #input-range{
         width: 90%;
-    } 
-}
+    }
 
-#alert{
-    margin: 1rem auto 0;
-    padding: 10px 20px;
-    text-align: center;
-}
-
-.alert-yellow{
-    background-color: #ffe600;
-    color: #2b2b2b;
-}
-
-.alert-red{
-    background-color: #de0000;
-    color: white;
-}
-
-#response{
-    font-family: monospace;
-    background-color: #37352d;
-    margin: 1rem auto 0;
-    padding: 10px;
-    color: #e8912c;
-    border: 1px solid #e8912c;
-    word-wrap: break-word;
+    .my_btn{
+        width: 7vw;
+    }
 }
