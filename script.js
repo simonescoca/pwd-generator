@@ -1,4 +1,3 @@
-// sostituire Math.random() con Crypto: getRandomValues()
 // aggiungi un tasto per la copia della password (dentro il response)
 // aggiungi un tasto per refreshare la password (dentro il response)
 // aggiungi due tasti per scorrere di +-1 il value dell’input
@@ -103,6 +102,18 @@ document.addEventListener("keydown",
 // FUNZIONI ///////////////////////////////////////////////
 
 /**
+ * Generates a cryptographically secure random index
+ * @param {number} arrayLength 
+ * @returns a random (0 <= index < array.length) 
+ */
+function genRandomIndex (arrayLength) {
+    const array = new Uint32Array(1)
+    window.crypto.getRandomValues(array)
+    const randomIndex = array[0] % (arrayLength)
+    return randomIndex
+}
+
+/**
  * Generates a pwdLength characters long password with several combinations of types of characters within at least one char per type selected
  * @param {number} pwdLength password's length
  * @param {boolean} areNumbersIncluded includes or not numbers
@@ -113,9 +124,7 @@ document.addEventListener("keydown",
  */
 function genPwd (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLettersIncluded, areSpecCharsIncluded) {
 
-    if (!areNumbersIncluded && !areUpLettersIncluded && !areLowLettersIncluded && !areSpecCharsIncluded) {
-        areNumbersIncluded = true
-    }
+    if (!areNumbersIncluded && !areUpLettersIncluded && !areLowLettersIncluded && !areSpecCharsIncluded) {areNumbersIncluded = true}
 
     let password = ""
 
@@ -126,10 +135,10 @@ function genPwd (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLett
     const specChars = ["!", "@", "#", "$", "%", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";", ":", ",", ".", "<", ">", "/", "?", "~", "£", "€", "^"]
         
     // dichiaro 4 variabili in cui mi chiedo se nella password sono inclusi tutti i tipi di caratteri
-    let hasNumber = false;     if (!areNumbersIncluded)     {hasNumber = true};
-    let hasUp = false;         if (!areUpLettersIncluded)   {hasUp = true};
-    let hasLow = false;        if (!areLowLettersIncluded)  {hasLow = true};
-    let hasSpec = false;       if (!areSpecCharsIncluded)   {hasSpec = true};
+    let hasNumber = false;  if (!areNumbersIncluded)     {hasNumber = true};
+    let hasUp = false;      if (!areUpLettersIncluded)   {hasUp = true};
+    let hasLow = false;     if (!areLowLettersIncluded)  {hasLow = true};
+    let hasSpec = false;    if (!areSpecCharsIncluded)   {hasSpec = true};
 
     // genera diverse password all'infinito, finché non generi una password con tutti i tipi di caratteri 
     while (!hasNumber || !hasUp || !hasLow || !hasSpec) {
@@ -138,25 +147,25 @@ function genPwd (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLett
         password = ""
         
         // resetto tutte le variabili booleane di check type ad ogni ciclo while
-        hasNumber = false;     if (!areNumbersIncluded)     {hasNumber = true};
-        hasUp = false;         if (!areUpLettersIncluded)   {hasUp = true};
-        hasLow = false;        if (!areLowLettersIncluded)  {hasLow = true};
-        hasSpec = false;       if (!areSpecCharsIncluded)   {hasSpec = true};
+        hasNumber = false;  if (!areNumbersIncluded)     {hasNumber = true};
+        hasUp = false;      if (!areUpLettersIncluded)   {hasUp = true};
+        hasLow = false;     if (!areLowLettersIncluded)  {hasLow = true};
+        hasSpec = false;    if (!areSpecCharsIncluded)   {hasSpec = true};
 
 
         while (password.length < pwdLength) {
         
             // dichiaro 4 nuove variabili che prendono un valore a caso del loro array
-            let randomNumber = numbers [Math.floor (Math.random() * numbers.length)];       if (!areNumbersIncluded)     {randomNumber = ""};
-            let randomUp = upLetters [Math.floor (Math.random() * upLetters.length)];       if (!areUpLettersIncluded)   {randomUp = ""};
-            let randomLow = lowLetters [Math.floor (Math.random() * lowLetters.length)];    if (!areLowLettersIncluded)  {randomLow = ""};
-            let randomSpec = specChars [Math.floor (Math.random() * specChars.length)];     if (!areSpecCharsIncluded)   {randomSpec = ""};
+            let randomNumber = numbers [genRandomIndex (numbers.length)];     if (!areNumbersIncluded)     {randomNumber = ""};
+            let randomUp = upLetters [genRandomIndex (upLetters.length)];     if (!areUpLettersIncluded)   {randomUp = ""};
+            let randomLow = lowLetters [genRandomIndex (lowLetters.length)];  if (!areLowLettersIncluded)  {randomLow = ""};
+            let randomSpec = specChars [genRandomIndex (specChars.length)];   if (!areSpecCharsIncluded)   {randomSpec = ""};
             
             // creo un nuovo array typesRandom con le 4 variabili casuali dichiarate prima
             const typesRandom = [randomNumber, randomUp, randomLow, randomSpec]
 
             // dichiaro un variabile che prende un valore a caso dall'array typesRandom, qundi un randomCharacter
-            const randomChar = typesRandom [Math.floor (Math.random() * typesRandom.length)]
+            const randomChar = typesRandom [genRandomIndex (typesRandom.length)]
 
             // se il randomChar è incluso in uno degli array iniziali, allora la variabile booleana di quel tipo diventa true
             if (numbers.includes(randomChar))     {hasNumber = true}
