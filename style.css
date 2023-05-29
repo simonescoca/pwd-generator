@@ -20,10 +20,22 @@ h1{
 main{
     border: 1px solid white;
     width: 90%;
-    margin: 6rem auto;
+    margin: 6rem auto 3rem;
     padding: 20px;
     border-radius: 10px;
     color: white;
+}
+
+.main-border-red {
+    border-color: #de0000;
+}
+
+.main-border-yellow {
+    border-color: #ffe600;
+}
+
+.main-border-green {
+    border-color: rgb(0, 255, 13);
 }
 
 .my_input-range-container{
@@ -36,6 +48,7 @@ main{
 
 #input-range{
     width: 80%;
+    cursor: pointer;
 }
 
 #input-range:focus{
@@ -107,6 +120,10 @@ main{
     color: white;
 }
 
+.my_btn:hover{
+    background-color: #2e2e2e !important;
+}
+
 #response{
     font-family: monospace;
     background-color: #37352d;
@@ -115,38 +132,64 @@ main{
     color: #e8912c;
     border: 1px solid #e8912c;
     word-wrap: break-word;
+    transition: all 0.2s;
+}
+
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.my_pad:active {
+    background-color: transparent !important;
+    color: white !important;
 }
 
 @media screen and (min-width: 576px) {
     header,
-    main{
+    main,
+    footer{
         width: 80%;
     }
 
    #input-range{
         margin: 0;
-        width: 86%;
+        width: 84%;
+    }
+
+    .my_pad{
+        width: 15%;
     }
 }
 
 @media screen and (min-width: 768px) {
     header,
-    main{
+    main,
+    footer{
         width: 65%;
     }
 }
 
 @media screen and (min-width: 992px) {
     header,
-    main{
+    main,
+    footer{
         width: 50%;
-    }
-
-    #input-range{
-        width: 90%;
     }
 
     .my_btn{
         width: 7vw;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    #input-range {
+        width: 90%;
     }
 }
