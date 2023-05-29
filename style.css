@@ -120,10 +120,6 @@ main{
     color: white;
 }
 
-.my_btn:hover{
-    background-color: #2e2e2e !important;
-}
-
 #response{
     font-family: monospace;
     background-color: #37352d;
