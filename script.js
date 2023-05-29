@@ -10,6 +10,11 @@ const inputCheckUpLetters = document.getElementById ("input-check-up-letters")
 const inputCheckLowLetters = document.getElementById ("input-check-low-letters")
 const inputCheckSpecChars = document.getElementById ("input-check-spec-chars")
 
+const leftArrow = document.getElementById ("value--")
+const copyButton = document.getElementById ("copy")
+const refreshButton = document.getElementById ("refresh")
+const rightArrow = document.getElementById ("value++")
+
 const rangeValue = parseInt (inputRangeElement.value)
 const areNumbersOk = inputCheckNumbers.checked
 const areUpLettersOk = inputCheckUpLetters.checked
@@ -18,6 +23,7 @@ const areSpecCharsOk = inputCheckSpecChars.checked
 
 // richiamo la funzione di check con il value iniziale del range = 12, così al caricamento della pagina la password non risulta vuota
 checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+
 
 // EVENT LISTENERS /////////////////////////////////////////
 inputRangeElement.addEventListener ("input", 
@@ -82,7 +88,7 @@ inputCheckSpecChars.addEventListener ("click",
 
 
 // aggiungo due evevnti diversi che si attivano uno con l'enter, ed esegue il refresh della pwd. L'altro cambia la pwdLength con le frecce direzionali
-document.addEventListener("keydown", 
+document.addEventListener ("keydown", 
     function (event) {
         if (event.key === "Enter") {
             const rangeValue = parseInt (inputRangeElement.value)
@@ -98,6 +104,53 @@ document.addEventListener("keydown",
     }    
 )
 
+leftArrow.addEventListener ("click",
+    function () {
+        let rangeValue = parseInt (inputRangeElement.value) - 1
+        inputRangeElement.value = rangeValue
+
+        const areNumbersOk = inputCheckNumbers.checked
+        const areUpLettersOk = inputCheckUpLetters.checked
+        const areLowLettersOk = inputCheckLowLetters.checked
+        const areSpecCharsOk = inputCheckSpecChars.checked
+        
+        checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+    }
+)
+
+copyButton.addEventListener ("click",
+    function () {
+        const responseElement = document.getElementById ("response")
+        const textToCopy = responseElement.innerText
+        navigator.clipboard.writeText (textToCopy)
+    }
+)
+
+refreshButton.addEventListener ("click",
+    function () {
+        const rangeValue = parseInt (inputRangeElement.value)
+        const areNumbersOk = inputCheckNumbers.checked
+        const areUpLettersOk = inputCheckUpLetters.checked
+        const areLowLettersOk = inputCheckLowLetters.checked
+        const areSpecCharsOk = inputCheckSpecChars.checked
+        
+        checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+    }
+)
+
+rightArrow.addEventListener ("click",
+    function () {
+        let rangeValue = parseInt (inputRangeElement.value) + 1
+        inputRangeElement.value = rangeValue
+
+        const areNumbersOk = inputCheckNumbers.checked
+        const areUpLettersOk = inputCheckUpLetters.checked
+        const areLowLettersOk = inputCheckLowLetters.checked
+        const areSpecCharsOk = inputCheckSpecChars.checked
+        
+        checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
+    }
+)
 
 // FUNZIONI ///////////////////////////////////////////////
 
@@ -209,11 +262,15 @@ function checkInputs (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLo
     }
 
     // se a pwdLength è assegnato un valore Nan, cioè che non è un numero, oppure è assegnato un valore minore di 1, cioè da 0 in giù oppure...
-    if (isNaN (pwdLength) || pwdLength < 1 || pwdLength !== Math.floor (pwdLength) || Math.floor (pwdLength) > 80) {
+    if (isNaN (pwdLength) || pwdLength < 1 || pwdLength !== Math.floor (pwdLength) || Math.floor (pwdLength) > 60) {
         // prendi l'emento del documento con id="range-value", leva le classi "yellow e green e aggiungi la red"
         document.getElementById ("input-range-value").classList.remove ("my_value-yellow")
         document.getElementById ("input-range-value").classList.remove ("my_value-green")
         document.getElementById ("input-range-value").classList.add ("my_value-red")
+
+        document.getElementById ("main").classList.remove ("main-border-yellow")
+        document.getElementById ("main").classList.remove ("main-border-green")
+        document.getElementById ("main").classList.add ("main-border-red")
 
         // prendi l'input element, leva le classi "yellow e green e aggiungi la red"
         inputRangeElement.classList.remove ("my_range-yellow")
@@ -232,6 +289,10 @@ function checkInputs (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLo
         document.getElementById ("input-range-value").classList.remove ("my_value-green")
         document.getElementById ("input-range-value").classList.add ("my_value-red")
 
+        document.getElementById ("main").classList.remove ("main-border-yellow")
+        document.getElementById ("main").classList.remove ("main-border-green")
+        document.getElementById ("main").classList.add ("main-border-red")
+
         inputRangeElement.classList.remove ("my_range-yellow")
         inputRangeElement.classList.remove ("my_range-green")
         inputRangeElement.classList.add ("my_range-red")
@@ -248,6 +309,10 @@ function checkInputs (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLo
         document.getElementById ("input-range-value").classList.remove ("my_value-red")
         document.getElementById ("input-range-value").classList.remove ("my_value-green")
         document.getElementById ("input-range-value").classList.add ("my_value-yellow")
+
+        document.getElementById ("main").classList.remove ("main-border-red")
+        document.getElementById ("main").classList.remove ("main-border-green")
+        document.getElementById ("main").classList.add ("main-border-yellow")
 
         inputRangeElement.classList.remove ("my_range-red")
         inputRangeElement.classList.remove ("my_range-green")
@@ -274,6 +339,10 @@ function checkInputs (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLo
         document.getElementById ("input-range-value").classList.remove ("my_value-yellow")
         document.getElementById ("input-range-value").classList.remove ("my_value-red")
         document.getElementById ("input-range-value").classList.add ("my_value-green")
+
+        document.getElementById ("main").classList.remove ("main-border-yellow")
+        document.getElementById ("main").classList.remove ("main-border-red")
+        document.getElementById ("main").classList.add ("main-border-green")
 
         inputRangeElement.classList.remove ("my_range-yellow")
         inputRangeElement.classList.remove ("my_range-red")
