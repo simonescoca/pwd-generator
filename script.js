@@ -329,6 +329,9 @@ function checkInputs (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLo
         responseElement.append (password)
         mainElement.appendChild (responseElement)
 
+        responseElement.classList.remove ("my_response-green")
+        responseElement.classList.add ("my_response-yellow")
+
         document.getElementById ("input-range-value") .innerText = pwdLength
 
     } else {
@@ -350,6 +353,9 @@ function checkInputs (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLo
         responseElement.id = "response"
         responseElement.append (password)
         mainElement.appendChild (responseElement)
+
+        responseElement.classList.remove ("my_response-yellow")
+        responseElement.classList.add ("my_response-green")
 
         document.getElementById ("input-range-value") .innerText = pwdLength
     }
