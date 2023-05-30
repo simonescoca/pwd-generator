@@ -201,36 +201,37 @@ function genPwd (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLett
         hasSpec = false;    if (!areSpecCharsIncluded)   {hasSpec = true};
 
 
+        // * finche non esce una password che abbia tutti i tipi di caratteri selezionati dall'utente, continua a generare password
         while (password.length < pwdLength) {
         
-            // dichiaro 4 nuove variabili che prendono un valore a caso del loro array
+            // * dichiaro 4 nuove variabili che prendono un valore a caso del loro array
             let randomNumber = numbers [genRandomIndex (numbers.length)];     if (!areNumbersIncluded)     {randomNumber = ""};
             let randomUp = upLetters [genRandomIndex (upLetters.length)];     if (!areUpLettersIncluded)   {randomUp = ""};
             let randomLow = lowLetters [genRandomIndex (lowLetters.length)];  if (!areLowLettersIncluded)  {randomLow = ""};
             let randomSpec = specChars [genRandomIndex (specChars.length)];   if (!areSpecCharsIncluded)   {randomSpec = ""};
             
-            // creo un nuovo array typesRandom con le 4 variabili casuali dichiarate prima
+            // * creo un nuovo array typesRandom con le 4 variabili casuali dichiarate prima
             const typesRandom = [randomNumber, randomUp, randomLow, randomSpec]
 
-            // dichiaro un variabile che prende un valore a caso dall'array typesRandom, qundi un randomCharacter
+            // * dichiaro una variabile che prende un valore a caso dall'array typesRandom, qundi un randomCharacter
             const randomChar = typesRandom [genRandomIndex (typesRandom.length)]
 
-            // se il randomChar è incluso in uno degli array iniziali, allora la variabile booleana di quel tipo diventa true
+            // * se il randomChar è incluso in uno degli array iniziali, allora la variabile booleana di quel tipo diventa true
             if (numbers.includes(randomChar))     {hasNumber = true}
             if (upLetters.includes(randomChar))   {hasUp = true}
             if (lowLetters.includes(randomChar))  {hasLow = true}
             if (specChars.includes(randomChar))   {hasSpec = true}
             
-            // riassegno il valore della variabile password aggiungendo per ogni ciclo un valore a caso dell'array typesRandom
+            // * riassegno il valore della variabile password aggiungendo per ogni ciclo un valore a caso dell'array typesRandom
             password += randomChar
         }
     }
-    // ritorno il valore della password
+    // * ritorno il valore della password
     return password
 }
 
 
-// creo una funzione che esegua dei controlli sugli input, che crei degli alert se serve e quando possibile richiami genPwd ()
+// * creo una funzione che esegua dei controlli sugli input, che crei degli alert se serve e quando possibile richiami genPwd ()
 function checkInputs (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLettersIncluded, areSpecCharsIncluded) {
 
     // inizializzo la costante mainElement e la metto uguale al main nel documento
@@ -256,7 +257,7 @@ function checkInputs (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLo
         document.getElementById ("input-check-numbers").checked = true
     }
 
-    // se a pwdLength è assegnato un valore Nan, cioè che non è un numero, oppure è assegnato un valore minore di 1, cioè da 0 in giù oppure...
+    // * se a pwdLength è assegnato un valore Nan, cioè che non è un numero, oppure è assegnato un valore minore di 1, cioè da 0 in giù oppure...
     if (isNaN (pwdLength) || pwdLength < 1 || pwdLength !== Math.floor (pwdLength) || Math.floor (pwdLength) > 60) {
         // prendi l'emento del documento con id="range-value", leva le classi "yellow e green e aggiungi la red"
         document.getElementById ("input-range-value").classList.remove ("my_value-yellow")
@@ -319,7 +320,7 @@ function checkInputs (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLo
         alertElement.append ("Strong passwords must have at least 12 characters !")
         mainElement.appendChild (alertElement)
 
-        // richiamo la funzione che genera la password
+        // * richiamo la funzione che genera la password
         const password = genPwd (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLettersIncluded, areSpecCharsIncluded)
 
         // crea una variabile chiamata responseElement, uguale ad un elepento <p> creato nel documento, dagli un id e una classe, e popola con la password, dopodiché aggiungilo al main, ma dopo l'alert
