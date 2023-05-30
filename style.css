@@ -23,6 +23,7 @@ main{
     margin: 6rem auto 3rem;
     padding: 20px;
     border-radius: 10px;
+    background-color: #3a3a3a;
     color: white;
 }
 
@@ -122,13 +123,22 @@ main{
 
 #response{
     font-family: monospace;
-    background-color: #37352d;
     margin: 1rem auto 0;
     padding: 10px;
-    color: #e8912c;
-    border: 1px solid #e8912c;
     word-wrap: break-word;
     transition: all 0.2s;
+}
+
+.my_response-yellow{
+    background-color: #37372d;
+    color: #e8b92c;
+    border: 1px solid #e8b92c;
+}
+
+.my_response-green{
+    background-color: #30372d;
+    color: #7ae82c;
+    border: 1px solid #7ae82c;
 }
 
 footer{
