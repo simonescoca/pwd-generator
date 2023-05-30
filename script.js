@@ -1,9 +1,4 @@
-// aggiungi un tasto per la copia della password (dentro il response)
-// aggiungi un tasto per refreshare la password (dentro il response)
-// aggiungi due tasti per scorrere di +-1 il value dell’input
-
-
-
+// * inizializzo una serie di variabili che si riferiscono agli input nel dom
 const inputRangeElement = document.getElementById ("input-range")
 const inputCheckNumbers = document.getElementById ("input-check-numbers")
 const inputCheckUpLetters = document.getElementById ("input-check-up-letters")
@@ -15,17 +10,18 @@ const copyButton = document.getElementById ("copy")
 const refreshButton = document.getElementById ("refresh")
 const rightArrow = document.getElementById ("value++")
 
+// * inizializzo delle variabili che controllino il value degli input
 const rangeValue = parseInt (inputRangeElement.value)
 const areNumbersOk = inputCheckNumbers.checked
 const areUpLettersOk = inputCheckUpLetters.checked
 const areLowLettersOk = inputCheckLowLetters.checked
 const areSpecCharsOk = inputCheckSpecChars.checked
 
-// richiamo la funzione di check con il value iniziale del range = 12, così al caricamento della pagina la password non risulta vuota
+// * richiamo la funzione di check con il value iniziale del range = 12, così al caricamento della pagina la password non risulta vuota
 checkInputs (rangeValue, areNumbersOk, areUpLettersOk, areLowLettersOk, areSpecCharsOk)
 
 
-// EVENT LISTENERS /////////////////////////////////////////
+// ! EVENT LISTENERS
 inputRangeElement.addEventListener ("input", 
     function () {
         const rangeValue = parseInt (inputRangeElement.value)
@@ -86,8 +82,6 @@ inputCheckSpecChars.addEventListener ("click",
     }
 )
 
-
-// aggiungo due evevnti diversi che si attivano uno con l'enter, ed esegue il refresh della pwd. L'altro cambia la pwdLength con le frecce direzionali
 document.addEventListener ("keydown", 
     function (event) {
         if (event.key === "Enter") {
@@ -152,7 +146,7 @@ rightArrow.addEventListener ("click",
     }
 )
 
-// FUNZIONI ///////////////////////////////////////////////
+// ! FUNZIONI
 
 /**
  * Generates a cryptographically secure random index
@@ -177,29 +171,30 @@ function genRandomIndex (arrayLength) {
  */
 function genPwd (pwdLength, areNumbersIncluded, areUpLettersIncluded, areLowLettersIncluded, areSpecCharsIncluded) {
 
+    // * se nessun input di typeChar è selezionato, comunque viene selezionato "numbers"
     if (!areNumbersIncluded && !areUpLettersIncluded && !areLowLettersIncluded && !areSpecCharsIncluded) {areNumbersIncluded = true}
 
     let password = ""
 
-    // inizializzo 4 tipi diversi di array
+    // * inizializzo 4 tipi diversi di array
     const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     const upLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     const lowLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     const specChars = ["!", "@", "#", "$", "%", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";", ":", ",", ".", "<", ">", "/", "?", "~", "£", "€", "^"]
         
-    // dichiaro 4 variabili in cui mi chiedo se nella password sono inclusi tutti i tipi di caratteri
+    // * dichiaro 4 variabili in cui mi chiedo se nella password sono inclusi tutti i tipi di caratteri
     let hasNumber = false;  if (!areNumbersIncluded)     {hasNumber = true};
     let hasUp = false;      if (!areUpLettersIncluded)   {hasUp = true};
     let hasLow = false;     if (!areLowLettersIncluded)  {hasLow = true};
     let hasSpec = false;    if (!areSpecCharsIncluded)   {hasSpec = true};
 
-    // genera diverse password all'infinito, finché non generi una password con tutti i tipi di caratteri 
+    // * genera diverse password all'infinito, finché non generi una password con tutti i tipi di caratteri 
     while (!hasNumber || !hasUp || !hasLow || !hasSpec) {
 
-        // resetto la variabile password ad ogni ciclo while
+        // * resetto la variabile password ad ogni ciclo while
         password = ""
         
-        // resetto tutte le variabili booleane di check type ad ogni ciclo while
+        // * resetto tutte le variabili booleane di check type ad ogni ciclo while
         hasNumber = false;  if (!areNumbersIncluded)     {hasNumber = true};
         hasUp = false;      if (!areUpLettersIncluded)   {hasUp = true};
         hasLow = false;     if (!areLowLettersIncluded)  {hasLow = true};
