@@ -206,15 +206,15 @@ function checkInputs(pwdLength, areNumbersIncluded, areUpLettersIncluded, areLow
     const main  = document.getElementById("main");
 
     // se la costante alertElement è vera, cioè: se esiste un elemento nell'HTML con id="alert", allora rimuovilo
-    if (alertElement) alertElement.remove();
+    if(alertElement) alertElement.remove();
     
     // se la costante responseElement è vera, cioè: se esiste un elemento nell'HTML con id="response", allora rimuovilo
-    if (responseElement) responseElement.remove();
+    if(responseElement) responseElement.remove();
 
-    if (!areNumbersIncluded && !areUpLettersIncluded && !areLowLettersIncluded && !areSpecCharsIncluded) document.getElementById ("input-check-numbers").checked = true;
+    if(!areNumbersIncluded && !areUpLettersIncluded && !areLowLettersIncluded && !areSpecCharsIncluded) document.getElementById ("input-check-numbers").checked = true;
 
     // * se a pwdLength è assegnato un valore Nan, cioè che non è un numero, oppure è assegnato un valore minore di 1, cioè da 0 in giù oppure...
-    if (isNaN (pwdLength) || pwdLength < 1 || pwdLength !== Math.floor (pwdLength) || Math.floor (pwdLength) > 60) {
+    if(isNaN (pwdLength) || pwdLength < 1 || pwdLength !== Math.floor (pwdLength) || Math.floor (pwdLength) > 60) {
         // prendi l'emento del documento con id="range-value", leva le classi "yellow e green e aggiungi la red"
         inputRangeValue.classList.remove("my_value-yellow", "my_value-green");
         inputRangeValue.classList.add("my_value-red");
@@ -233,8 +233,8 @@ function checkInputs(pwdLength, areNumbersIncluded, areUpLettersIncluded, areLow
         alertElement.append("INVALID INPUTS!");
         mainElement.appendChild(alertElement);
 
-    } else if (pwdLength < 4) {
-        inputRangeValue.classList.remove ("my_value-yellow", "my_value-green");
+    } else if(pwdLength < 4) {
+        inputRangeValue.classList.remove("my_value-yellow", "my_value-green");
         inputRangeValue.classList.add ("my_value-red");
 
         main.classList.remove("main-border-yellow", "main-border-green");
@@ -251,7 +251,7 @@ function checkInputs(pwdLength, areNumbersIncluded, areUpLettersIncluded, areLow
 
         document.getElementById("input-range-value").innerText = pwdLength;
         
-    } else if (pwdLength < 12) {
+    } else if(pwdLength < 12) {
         inputRangeValue.classList.remove("my_value-red", "my_value-green");
         inputRangeValue.classList.add("my_value-yellow");
 
@@ -273,7 +273,7 @@ function checkInputs(pwdLength, areNumbersIncluded, areUpLettersIncluded, areLow
         responseElement.classList.remove("my_response-green");
         responseElement.classList.add("my_response-yellow");
 
-        inputRangeValue.innerText = pwdLength
+        inputRangeValue.innerText = pwdLength;
 
     } else {
         inputRangeValue.classList.remove("my_value-yellow", "my_value-red");
